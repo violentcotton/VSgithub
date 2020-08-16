@@ -33,7 +33,7 @@ namespace Csharp
         public string Sex { get; set; }
         public void GoToSchool()
         {
-            Console.WriteLine("我去上课了！");
+            Console.WriteLine("哎呀我去！");
         }
     }
 }
