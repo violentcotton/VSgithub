@@ -28,4 +28,11 @@ namespace StopWatch
             Console.WriteLine(Stopwatch.IsHighResolution);
         }
     }
+    class Test
+    {
+        public Test()
+        {
+
+        }
+    }
 }
