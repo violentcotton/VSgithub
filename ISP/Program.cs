@@ -17,6 +17,19 @@ namespace ISP
             Console.WriteLine(Sum(num1));
             Console.WriteLine(Sum(num2));
             Console.WriteLine(Sum(roc));
+
+
+            var driver = new Driver(new HeavyTank());
+            driver.Run();
+
+
+            var warmkiller = new WarmKiller();
+            warmkiller.Love();
+
+            IKiller killer = new WarmKiller();
+            killer.Kill();
+            var warm = killer as WarmKiller;
+            warm.Love();
         }
         static int Sum(IEnumerable nums)
         {
@@ -81,4 +94,109 @@ namespace ISP
             }
         }
     }
+
+    public class Driver
+    {
+        private IVehicle _vehicle;
+        public Driver(IVehicle vehicle)
+        {
+            this._vehicle = vehicle;
+        }
+        public void Run()
+        {
+            _vehicle.Run();
+        }
+    }
+    public interface IVehicle
+    {
+        void Run();
+    }
+    public class Car : IVehicle
+    {
+        public void Run()
+        {
+            Console.WriteLine("Car is running!");
+        }
+    }
+    public class Truck : IVehicle
+    {
+        public void Run()
+        {
+            Console.WriteLine("Truck is running!");
+        }
+    }
+
+    interface IWeapon
+    {
+        void Fire();
+    }
+
+    interface ITank : IVehicle, IWeapon
+    {
+
+    }
+    public class LightTank : ITank
+    {
+        public void Fire()
+        {
+            Console.WriteLine("Boom");
+        }
+
+        public void Run()
+        {
+            Console.WriteLine("Ka ka ka...");
+        }
+    }
+    public class MiddleTank : ITank
+    {
+        public void Fire()
+        {
+            Console.WriteLine("Boom!");
+        }
+
+        public void Run()
+        {
+            Console.WriteLine("Ka! ka! ka!...");
+        }
+    }
+    public class HeavyTank : ITank
+    {
+        public void Fire()
+        {
+            Console.WriteLine("Boom!!");
+        }
+
+        public void Run()
+        {
+            Console.WriteLine("Ka!! ka!! ka!!...");
+        }
+    }
+
+
+    #region<The killer is not too cold>
+    public class WarmKiller : IGentleman, IKiller
+    {
+        public void Love()
+        {
+            Console.WriteLine("Let me love you forever");
+        }
+
+        void IKiller.Kill()
+        {
+            Console.WriteLine("I will kill the badguy");
+        }
+
+       
+    }
+
+    public interface IGentleman
+    {
+        void Love();
+    }
+    public interface IKiller
+    {
+        void Kill();
+    }
+
+    #endregion
 }

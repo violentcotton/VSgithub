@@ -1,39 +1,28 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-/*
-*此DI非彼DI
-*DI: Dependency Injection
-*依赖注入（应用）
-*DIP: Dependence Inversion Principle
-*依赖反转原则（概念）
-*
-*依赖注入是在依赖反转的概念之上，结合接口和反射机制的一项应用
-*/
-namespace DI
+namespace Reflaction
 {
     class Program
     {
         static void Main(string[] args)
         {
-            var sc = new ServiceCollection();
-            sc.AddScoped(typeof(ITank), typeof(MiddleTank));
-            sc.AddScoped(typeof(IVehicle), typeof(LightTank));
-            sc.AddScoped<Driver>();
-            var sp = sc.BuildServiceProvider();
-            //=====================================
-            ITank tank = sp.GetService<ITank>();
-            tank.Fire();
-            tank.Run();
-
-            var driver = sp.GetService<Driver>();
-            driver.Run();
+            ITank tank = new HeavyTank();
+            //========以下都是用反射完成==========
+            var t = tank.GetType();
+            object o = Activator.CreateInstance(t);
+            MethodInfo fireMi = t.GetMethod("Fire");
+            MethodInfo runMi = t.GetMethod("Run");
+            fireMi.Invoke(o, null);
+            runMi.Invoke(o, null);
+            
         }
     }
+
     public class Driver
     {
         private IVehicle _vehicle;
