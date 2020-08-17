@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using DI_Advance.SDK;
 
 
 
@@ -22,8 +24,10 @@ namespace DI_Advance
                 var types = assembly.GetTypes();
                 foreach (var t in types)
                 {
-                    if (t.GetMethod("Voice")!=null)
+                    if (t.GetInterfaces().Contains(typeof(IAnimal)))
                     {
+                        var isUnfinished = t.GetCustomAttributes(false).Any(a => a.GetType() == typeof(UnfinishedAttribute));
+                        if (isUnfinished) continue;
                         animalTypes.Add(t);
                     }
                 }
@@ -50,7 +54,8 @@ namespace DI_Advance
                 MethodInfo m = t.GetMethod("Voice");
                 var o = Activator.CreateInstance(t);
 
-                m.Invoke(o, new object[] { times });
+                var a = o as IAnimal;
+                a.Voice(times);
 
             }
         }
