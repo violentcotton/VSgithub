@@ -10,7 +10,7 @@ namespace Override
     {
         static void Main(string[] args)
         {
-            Vehicle vehicle = new Vehicle();
+            Vehicle vehicle = new Car();
             vehicle.Run();
         }
     }

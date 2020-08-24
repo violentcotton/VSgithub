@@ -20,7 +20,7 @@ namespace ISP
 
 
             var driver = new Driver(new HeavyTank());
-            driver.Run();
+            driver.Drive();
 
 
             var warmkiller = new WarmKiller();
@@ -102,7 +102,7 @@ namespace ISP
         {
             this._vehicle = vehicle;
         }
-        public void Run()
+        public void Drive()
         {
             _vehicle.Run();
         }
